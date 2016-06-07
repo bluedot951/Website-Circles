@@ -1,0 +1,18 @@
+open source
+	Apache Spark,http://spark.apache.org/
+	Word2Vec,https://code.google.com/archive/p/word2vec/
+websites
+	Search
+		Google,https://www.google.com
+		Yahoo,https://www.yahoo.com
+	Social Media
+		Facebook,https://www.facebook.com
+		Twitter,https://www.twitter.com
+	News
+		CNN,http://www.cnn.com
+		ESPN,http://www.espn.com
+	Reddit,https://www.reddit.com
+	Medallia,http://www.medallia.com
+	Wiki Sites
+		Wikipedia,https://www.wikipedia.org
+		Wikibooks,https://www.wikibooks.org
