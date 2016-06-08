@@ -43,6 +43,8 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script>
 
+var medColors = ["#079BC7", "#1AB5E9", "#0C6DB6"]
+
 var margin = 20,
     diameter = 960;
 
@@ -74,9 +76,23 @@ d3.json("flare.json", function(error, root) {
     .enter().append("circle")
       .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
       // .attr("xlink:href", function(d){return d.url;})
-      .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+      // .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+      .style("fill", function(d) { return d.children ? medColors[d.depth % medColors.length] : null; })
       // .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
-      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); else openTab(d), d3.event.stopPropagation();});
+      .on("click", function(d) { 
+        if(d.children && d.children.length == 1) {
+          openTab(d);
+          d3.event.stopPropogation();
+        } 
+        else if (focus !== d) {
+          zoom(d);
+          d3.event.stopPropagation();
+        }
+        else {
+          openTab(d);
+          d3.event.stopPropagation();
+        }
+      });
 
   var text = svg.selectAll("text")
       .data(nodes)
@@ -96,7 +112,7 @@ d3.json("flare.json", function(error, root) {
   var allLabels = svg.selectAll("text");
 
   d3.select("body")
-      .style("background", color(-1))
+      .style("background", "#73CCF3")
       .on("click", function() { zoom(root); });
 
   zoomTo([root.x, root.y, root.r * 2 + margin]);
@@ -145,7 +161,10 @@ d3.json("flare.json", function(error, root) {
     });
     text.attr("transform", function(d) { 
       // console.log("in zoom to" + d);
-      return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1] -d.r * 0.75) * k + ")"; 
+      if(d.children && d.children.length > 0)
+        return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1] -d.r * 0.75) * k + ")"; 
+      else
+        return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; 
     });
   }
 });
