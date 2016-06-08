@@ -33,7 +33,7 @@ for line in myFile:
     strpLine = line.strip()
     data = strpLine.split(",")
     if(len(data) == 2):
-    	node = {"name": data[0], "children": [{"name": data[0], "link": data[1], "size" : 100}], "size" : 100}
+    	node = {"name": "", "children": [{"name": data[0], "link": data[1], "size" : 100}], "size" : 100}
     else:
     	node = {"name": data[0], "size": 100}
 
@@ -47,7 +47,7 @@ for line in myFile:
 
 json_list = root["children"]
 
-master = {"name" : "Medallia", "children": json_list}
+master = {"name" : "", "children": json_list}
 
 outputfile = open("flare.json", "w")
 outputfile.write(json.dumps(master, sort_keys=True, indent=3, separators=(',', ': ')))
